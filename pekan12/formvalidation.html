@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ .error {
+    color: red;
+ }
+ form button{
+    background-color: aqua;
+ }
+</style>
+</head>
+<body>
+ <form id="Form">
+    Nama: <input type="text" id="name" required maxlength="30"><br> <br>
+    Email: <input type="email" id="email" required><br> <br>
+    Waktu Terbang: <input type="time" id="departureTime" required><br> <br>
+    Nomor Tiket: <input type="number" id="numberOfTickets" required min="1" max="10"><br> <br>
+    <button type="submit">Submit</button>
+ </form>
+ <div id="result"></div>
+
+ <script>
+    document.getElementById("Form").addEventListener("submit", function(event){
+      event.preventDefault();
+      
+      let name = document.getElementById("name").value;
+      let email = document.getElementById("email").value;
+      let departureTime = document.getElementById("departureTime").value;
+      let numberOfTickets = document.getElementById("numberOfTickets").value;
+      
+      let errors = [];
+      
+      if(name === ""){
+        errors.push("Name is required.");
+      }
+      
+      if(email === ""){
+        errors.push("Email is required.");
+      }
+      
+      if(departureTime === ""){
+        errors.push("Departure Time is required.");
+      }
+      
+      if(numberOfTickets === "" || numberOfTickets < 1 || numberOfTickets > 10){
+        errors.push("Number of Tickets must be an integer between 1 and 10.");
+      }
+      
+      if(errors.length > 0){
+        let errorMessage = "<ul>";
+        for(let i = 0; i < errors.length; i++){
+          errorMessage += "<li class='error'>" + errors[i] + "</li>";
+        }
+        errorMessage += "</ul>";
+        document.getElementById("result").innerHTML = errorMessage;
+      } else {
+        let dataMessage = "Name: " + name + "<br>Email: " + email + "<br>Departure Time: " + departureTime + "<br>Number of Tickets: " + numberOfTickets;
+        document.getElementById("result").innerHTML = dataMessage;
+      }
+    });
+ </script>
+</body>
+</html>
